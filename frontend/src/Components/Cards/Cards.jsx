@@ -175,7 +175,7 @@ function Cards() {
                         Go Back
                     </button>
                 </section >
-                <h3 className='m-auto md:text-2xl tracking-wide '>Closest Search to {title} are as follows: </h3>
+                <h3 className=' text-sm md:text-3xl mx-auto tracking-wide '>Closest Search to {title} are as follows: </h3>
                 <main id='cards' className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 place-items-center p-6'>
                     {movies.map((item, ind) => (
                         <motion.div
