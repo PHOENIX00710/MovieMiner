@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, CSSProperties, useState } from 'react'
 import './cards.css'
 import Card from '../Card/Card'
 import { useNavigate } from 'react-router-dom'
 import { FaSearch } from "react-icons/fa";
 import { LuShieldClose } from "react-icons/lu";
 import { motion } from 'framer-motion'
+import { ClipLoader, PacmanLoader } from "react-spinners";
 
 function Cards() {
 
@@ -14,12 +15,16 @@ function Cards() {
     const [modalDetails, setModalDetails] = useState({})
     const [title, setTitle] = useState('Inception')
     const [movies, setMovies] = useState([{}, {}])
+    const [loading, setLoading] = useState(false)
+
+    // CSS overRiding for the loader
 
     // Api Call
 
     useEffect(() => {
         const fetchDetails = async () => {
             try {
+                setLoading(true)
                 const req = await fetch('https://movieminer.onrender.com/api', {
                     method: 'POST',
                     headers: {
@@ -54,6 +59,7 @@ function Cards() {
                     temp.push(obj)
                 });
                 setMovies(temp);
+                setLoading(false)
             }
             catch (error) {
                 console.log(error);
@@ -90,7 +96,20 @@ function Cards() {
         setTitle(searchText.value)
         searchText.value = ''
     }
-
+    if (loading) {
+        return (
+            <div className='min-h-screen flex flex-col gap-3 justify-center items-center '>
+                <PacmanLoader
+                    color={"white"}
+                    loading={loading}
+                    size={70}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                />
+                <h1 className='md:text-3xl mx-auto'>Top matches for {title}, coming right up</h1>
+            </div>
+        )
+    }
     return (
         <>
             {openModal &&
@@ -156,6 +175,7 @@ function Cards() {
                         Go Back
                     </button>
                 </section >
+                <h3 className='m-auto md:text-2xl tracking-wide '>Closest Search to {title} are as follows: </h3>
                 <main id='cards' className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 place-items-center p-6'>
                     {movies.map((item, ind) => (
                         <motion.div

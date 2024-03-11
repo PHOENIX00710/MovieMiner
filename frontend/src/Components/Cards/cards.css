@@ -4,7 +4,7 @@
     color: #ffffff;
 }
 
-#go-back-btn {
+#go-back-btn,h3 {
     text-shadow:
         0 0 10px rgba(50, 154, 166, 0.7),
         0 0 20px rgba(50, 154, 166, 0.6),
